@@ -1,0 +1,11 @@
+Makefile
+Makefile.old
+*.tar.gz
+*.bak
+*.swp
+pm_to_blib
+blib/
+App-curl2lwp-online-*
+App-curl2lwp-online-*/
+.releaserc
+MYMETA.*

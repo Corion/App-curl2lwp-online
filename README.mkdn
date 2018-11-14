@@ -1,0 +1,21 @@
+
+[![Travis Build Status](https://travis-ci.org/Corion/App-curl2lwp-online.svg?branch=master)](https://travis-ci.org/Corion/App-curl2lwp-online)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/Corion/App-curl2lwp-online?branch=master&svg=true)](https://ci.appveyor.com/project/Corion/App-curl2lwp-online)
+
+CONTRIBUTING
+
+See lib/WWW/Mechanize/Chrome/Contributing.pod
+
+[Google Keep Extraction](https://github.com/Corion/WWW-Mechanize-Chrome/raw/master/demo/keep-export-demo.mp4)
+
+# NAME
+
+App::curl2lwp::online - convert curl commands to LWP::UserAgent Perl code online
+
+# DESCRIPTION
+
+This is the code driving [https://corion.net/curl2lwp.psgi](https://corion.net/curl2lwp.psgi). It is a fancy web
+interface to [HTTP::Request::FromCurl](https://metacpan.org/pod/HTTP::Request::FromCurl) using [Mojolicious](https://metacpan.org/pod/Mojolicious) for the
+web frontend.
+
+This module is a placeholder to allow installation via `cpan`.
