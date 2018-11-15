@@ -151,7 +151,7 @@ xmp {
 <head>
 <title>Curl-to-lwp - Convert Curl command lines to Perl</title>
 %= javascript '/mojo/jquery/jquery.js'
-<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="<%= url_for 'style.css'%>" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
