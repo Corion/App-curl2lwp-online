@@ -18,6 +18,7 @@ sub as_curl( $command ) {
             );
         };
     return (
+        version => $HTTP::Request::FromCurl::VERSION,
         command => $command,
         perl_code => join( "\n\n", map { s!^    !!gm; $_ } map { $_->as_snippet } @requests),
         error => join( "\n", grep { defined $_ } $@, @errors, )
@@ -163,7 +164,7 @@ xmp {
   "applicationSubCategory": "Programming",    
   "about": "This converts Curl commands to Perl code",
   "browserRequirements": "",
-  "softwareVersion": "0.01",
+  "softwareVersion": "<%= $version %>",
   "screenshot": "[image-url]",
   "inLanguage":[{
       "@type": "Language",
@@ -181,7 +182,8 @@ xmp {
       ]
   },
   "operatingSystem": "All"
-}</script>
+}
+</script>
 
 <script>
 function run() {
@@ -197,6 +199,7 @@ function run() {
                 $('#perl_code').text(result.perl_code);
                 $("#command_comment").text( result.command );
                 $('#error').text(result.error);
+                $('#version').text(result.version);
             },
             error: function (error) {
                 console.log("Error");
@@ -257,7 +260,8 @@ Created from curl command line
 <h2>Powered by</h2>
 <ul>
 <li><a href="https://mojolicious.org">Mojolicious</a> for highly convenient web stuff</li>
-<li><a href="https://metacpan.org/pod/HTTP::Request::FromCurl">HTTP::Request::FromCurl</a> for Curl handling (<a href="https://github.com/Corion/HTTP-Request-FromCurl">Github repository</a>)</li>
+<li><a href="https://metacpan.org/pod/HTTP::Request::FromCurl">HTTP::Request::FromCurl</a> <span id="version"><%= $version %></span> for Curl handling (<a href="https://github.com/Corion/HTTP-Request-FromCurl">Github repository</a>)</li>
+<li><a href="mailto:http-request-fromcurl@corion.net">Bug report / contact</a></li>
 </ul>
 <h></p>
 </body>
