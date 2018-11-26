@@ -47,6 +47,7 @@ my %module = (
         'Filter::signatures'      => 0,
         'HTTP::Request::FromCurl' => 0,
         'Mojolicious'             => 8,
+        'Perl::Tidy'              => 0,
     },
     TEST_REQUIRES => {
         'Test::More'   => 0,

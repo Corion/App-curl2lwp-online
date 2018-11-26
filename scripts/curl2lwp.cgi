@@ -5,7 +5,7 @@ use Filter::signatures;
 use feature 'signatures';
 no warnings 'experimental::signatures';
 
-sub as_curl( $command ) {
+sub as_lwp( $command ) {
     $command =~ s!\\[\r\n]+! !g; # eliminate shell-style line breaks
     my @errors;
     local $SIG{__WARN__} = sub { push @errors, @_ };
@@ -26,12 +26,12 @@ sub as_curl( $command ) {
 }
 
 get  '/' => sub( $c ) {
-    $c->render(as_curl( 'curl -X GET -A pcurl/1.0 https://example.com --data-binary @/etc/passwd' ))
+    $c->render(as_lwp( 'curl -X GET -A pcurl/1.0 https://example.com --data-binary @/etc/passwd' ))
 } => 'index';
 
 post '/' => sub( $c ) {
     my( $command ) = $c->param("command");
-    my %res = as_curl( $command );
+    my %res = as_lwp( $command );
     $c->respond_to(
         json => { json => \%res },
         html => sub { $c->render( %res ); },
