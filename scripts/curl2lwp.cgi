@@ -4,23 +4,33 @@ use HTTP::Request::FromCurl;
 use Filter::signatures;
 use feature 'signatures';
 no warnings 'experimental::signatures';
+use Perl::Tidy;
 
 sub as_lwp( $command ) {
     $command =~ s!\\[\r\n]+! !g; # eliminate shell-style line breaks
     my @errors;
     local $SIG{__WARN__} = sub { push @errors, @_ };
 
-    my @requests = 
+    my @requests =
         eval {
             HTTP::Request::FromCurl->new(
                 command_curl => $command,
                 read_files => 0,
             );
         };
+
+    my $code = join( "\n\n", map { s!^    !!gm; $_ } map { $_->as_snippet } @requests );
+    my $formatted;
+    Perl::Tidy::perltidy(
+        source      => \$code,
+        destination => \$formatted,
+        argv        => [ '--no-memoize' ],
+    ) or $code = $formatted;
+
     return (
         version => $HTTP::Request::FromCurl::VERSION,
         command => $command,
-        perl_code => join( "\n\n", map { s!^    !!gm; $_ } map { $_->as_snippet } @requests),
+        perl_code => $code,
         error => join( "\n", grep { defined $_ } $@, @errors, )
     );
 }
@@ -161,7 +171,7 @@ xmp {
   "name": "Convert Curl command to Perl code",
   "url": "https://corion.net/curl2lwp.psgi",
   "applicationCategory": "Utility",
-  "applicationSubCategory": "Programming",    
+  "applicationSubCategory": "Programming",
   "about": "This converts Curl commands to Perl code",
   "browserRequirements": "",
   "softwareVersion": "<%= $version %>",
