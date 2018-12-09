@@ -276,7 +276,8 @@ Created from curl command line
 <ul>
 <li><a href="https://mojolicious.org">Mojolicious</a> for highly convenient web stuff</li>
 <li><a href="https://metacpan.org/pod/HTTP::Request::FromCurl">HTTP::Request::FromCurl</a> <span id="version"><%= $version %></span> for Curl handling (<a href="https://github.com/Corion/HTTP-Request-FromCurl">Github repository</a>)</li>
-<li><a href="mailto:http-request-fromcurl@corion.net">Bug report / contact</a></li>
+% use Mojo::Util 'url_escape';
+<li><a id="contact" href="mailto:http-request-fromcurl@corion.net?subject=<%= url_escape('About HTTP::Request::FromURL'); %>&amp;body=<%= url_escape( $command ); %>">Bug report / contact</a></li>
 </ul>
 <h></p>
 </body>
