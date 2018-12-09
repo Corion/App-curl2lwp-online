@@ -19,7 +19,11 @@ sub as_lwp( $command ) {
             );
         };
 
-    my $code = join( "\n\n", map { s!^    !!gm; $_ } map { $_->as_snippet } @requests );
+    my $code = join( "\n\n",
+                   map { s!^    !!gm; $_ }
+                   map { $_->as_snippet }
+                   @requests
+               );
     my $formatted;
     Perl::Tidy::perltidy(
         source      => \$code,
