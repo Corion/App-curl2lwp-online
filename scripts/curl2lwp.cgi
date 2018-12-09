@@ -218,8 +218,8 @@ function contactMail(options) {
     };
 
     let result = "mailto:"+options["url"]
-                 +"?subject="+encodeURI(options["subject"])
-                 +"&amp;body="+encodeURI(mailBody);
+               +"?subject="+encodeURI(options["subject"])
+               +"&amp;body="+encodeURI(mailBody);
     return result
 }
 
