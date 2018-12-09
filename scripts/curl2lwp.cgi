@@ -279,6 +279,5 @@ Created from curl command line
 % use Mojo::Util 'url_escape';
 <li><a id="contact" href="mailto:http-request-fromcurl@corion.net?subject=<%= url_escape('About HTTP::Request::FromURL'); %>&amp;body=<%= url_escape( $command ); %>">Bug report / contact</a></li>
 </ul>
-<h></p>
 </body>
 </html>
