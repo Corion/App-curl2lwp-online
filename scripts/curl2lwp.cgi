@@ -159,6 +159,7 @@ xmp {
 }
 #error { color: red; }
 .jsonly { display: hidden; }
+textarea { width:100%; height:10rem; }
 
 @@ index.html.ep
 <!DOCTYPE html>
@@ -239,7 +240,7 @@ function copyToClipboard(element) {
 <body>
 <h2>Paste your Curl command here</h2>
 <form method="POST" action="<%= url_for %>">
-<textarea id="command" name="command" style="width:100%; height:10rem">
+<textarea id="command" name="command">
 <%= $command %>
 </textarea>
 <div class="nojs">
