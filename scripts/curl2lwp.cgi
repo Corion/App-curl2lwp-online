@@ -161,47 +161,11 @@ xmp {
 .jsonly { display: hidden; }
 textarea { width:100%; height:10rem; }
 
-@@ index.html.ep
-<!DOCTYPE html>
-<html>
-<head>
-<title>Curl-to-lwp - Convert Curl command lines to Perl</title>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; style-src 'self'; script-src 'unsafe-inline' 'self' localhost:* 127.0.0.1:*; worker-src 'none'; frame-src 'none'; object-src 'none'; img-src 'self'; ">
-%= javascript '/mojo/jquery/jquery.js'
-<link rel="stylesheet" href="<%= url_for 'style.css'%>" />
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@id": "curl2lwp",
-  "@type": "WebApplication",
-  "name": "Convert Curl command to Perl code",
-  "url": "https://corion.net/curl2lwp.psgi",
-  "applicationCategory": "Utility",
-  "applicationSubCategory": "Programming",
-  "about": "This converts Curl commands to Perl code",
-  "browserRequirements": "",
-  "softwareVersion": "<%= $version %>",
-  "screenshot": "[image-url]",
-  "inLanguage":[{
-      "@type": "Language",
-      "name": "English",
-      "alternateName": "en",
-      "additionalType":"https://www.loc.gov/standards/iso639-2/php/code_list.php",
-      "sameAs":"https://en.wikipedia.org/wiki/English_language"
-    }
-],
-  "softwareHelp": {
-    "@type": "CreativeWork",
-      "name":"Customer Service and Support",
-      "url": [
-      "https://example.com/en/help.html"
-      ]
-  },
-  "operatingSystem": "All"
-}
-</script>
+@@ app.js
+document.addEventListener('DOMContentLoaded', function () {
+  run();
+});
 
-<script>
 function run() {
     $(".nojs").hide();
     $(".jsonly").show();
@@ -234,9 +198,9 @@ function run() {
 
 
     });
+    $("#copy").click(function() { copyToClipboard($('.codeblock')) });
     $("#command").focus();
 }
-$(document).ready(run);
 
 function copyToClipboard(element) {
     var temp = $("<textarea>");
@@ -258,6 +222,46 @@ function contactMail(options) {
                  +"&amp;body="+encodeURI(mailBody);
     return result
 }
+
+@@ index.html.ep
+<!DOCTYPE html>
+<html>
+<head>
+<title>Curl-to-lwp - Convert Curl command lines to Perl</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; style-src 'self'; script-src 'self'; worker-src 'none'; frame-src 'none'; object-src 'none'; img-src 'self'; ">
+%= javascript './mojo/jquery/jquery.js'
+%= javascript './app.js'
+<link rel="stylesheet" href="<%= url_for 'style.css'%>" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@id": "curl2lwp",
+  "@type": "WebApplication",
+  "name": "Convert Curl command to Perl code",
+  "url": "https://corion.net/curl2lwp.psgi",
+  "applicationCategory": "Utility",
+  "applicationSubCategory": "Programming",
+  "about": "This converts Curl commands to Perl code",
+  "browserRequirements": "",
+  "softwareVersion": "<%= $version %>",
+  "screenshot": "[image-url]",
+  "inLanguage":[{
+      "@type": "Language",
+      "name": "English",
+      "alternateName": "en",
+      "additionalType":"https://www.loc.gov/standards/iso639-2/php/code_list.php",
+      "sameAs":"https://en.wikipedia.org/wiki/English_language"
+    }
+],
+  "softwareHelp": {
+    "@type": "CreativeWork",
+      "name":"Customer Service and Support",
+      "url": [
+      "https://example.com/en/help.html"
+      ]
+  },
+  "operatingSystem": "All"
+}
 </script>
 </head>
 <body>
@@ -272,7 +276,7 @@ function contactMail(options) {
 </form>
 <h2>Resulting Perl code</h2>
 <div class="jsonly">
-<a href="#" onclick="javascript:copyToClipboard($('.codeblock'))">Copy to clipboard</a>
+<a href="#">Copy to clipboard</a>
 </div>
 <code class="codeblock">
 #!perl
