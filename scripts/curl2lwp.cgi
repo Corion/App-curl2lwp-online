@@ -166,6 +166,7 @@ textarea { width:100%; height:10rem; }
 <html>
 <head>
 <title>Curl-to-lwp - Convert Curl command lines to Perl</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; style-src 'self'; script-src 'unsafe-inline' 'self' localhost:* 127.0.0.1:*; worker-src 'none'; frame-src 'none'; object-src 'none'; img-src 'self'; ">
 %= javascript '/mojo/jquery/jquery.js'
 <link rel="stylesheet" href="<%= url_for 'style.css'%>" />
 <script type="application/ld+json">
@@ -230,6 +231,7 @@ function run() {
                 console.log(result);
             }
         });
+
 
     });
     $("#command").focus();
