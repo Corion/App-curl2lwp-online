@@ -266,7 +266,7 @@ function contactMail(options) {
 </head>
 <body>
 <h2>Paste your Curl command here</h2>
-<form method="POST" action="<%= url_for %>">
+<form method="POST" action="<%= url_for %>" enctype="application/x-www-form-urlencoded">
 <textarea id="command" name="command">
 <%= $command %>
 </textarea>
