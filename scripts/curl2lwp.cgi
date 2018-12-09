@@ -180,7 +180,7 @@ function run() {
             "state": ['#command', '#perl_code'],
         }));
         $.ajax({
-            url     : "<% url_for %>",
+            url     : window.location.href,
             dataType: 'json',
             type    : "post",
             data    : {'command' : $(this).val()},
