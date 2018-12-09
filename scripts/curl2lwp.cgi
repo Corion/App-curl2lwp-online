@@ -205,6 +205,15 @@ function run() {
     $(".nojs").hide();
     $(".jsonly").show();
     $("#command").on('input', function(){
+        $("#contact").attr('href', contactMail({
+            "url":"http-request-fromcurl@corion.net",
+            "subject":"About the HTTP::Request::FromCurl website",
+            "body":"Hello,\nI'm writing to you about the website at "
+                    + window.location + ":\n"
+                    + "Thank you very much in advance!\n"
+                    + "For debugging, the context of the site is:\n\n",
+            "state": ['#command', '#perl_code'],
+        }));
         $.ajax({
             url     : "<% url_for %>",
             dataType: 'json',
@@ -235,6 +244,18 @@ function copyToClipboard(element) {
     temp.remove();
 }
 
+function contactMail(options) {
+    let mailBody = options["body"];
+    for (var v in options["state"]) {
+        let content = v + ":\n[[" + $(v).text() + "]]";
+        mailBody = mailBody + "\n" + content;
+    };
+
+    let result = "mailto:"+options["url"]
+                 +"?subject="+encodeURI(options["subject"])
+                 +"&amp;body="+encodeURI(mailBody);
+    return result
+}
 </script>
 </head>
 <body>
