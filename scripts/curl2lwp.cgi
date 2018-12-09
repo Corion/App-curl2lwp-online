@@ -228,7 +228,7 @@ function contactMail(options) {
 <html>
 <head>
 <title>Curl-to-lwp - Convert Curl command lines to Perl</title>
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self'; style-src 'self'; script-src 'self'; worker-src 'none'; frame-src 'none'; object-src 'none'; img-src 'self'; ">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src 'self'; style-src 'self'; script-src 'self'; worker-src 'none'; frame-src 'none'; object-src 'none'; img-src 'self'; ">
 %= javascript './mojo/jquery/jquery.js'
 %= javascript './app.js'
 <link rel="stylesheet" href="<%= url_for 'style.css'%>" />
