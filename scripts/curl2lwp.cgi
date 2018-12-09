@@ -192,7 +192,7 @@ function run() {
             },
             error: function (error) {
                 console.log("Error");
-                console.log(result);
+                console.log(error);
             }
         });
 
