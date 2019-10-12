@@ -6,7 +6,16 @@ use feature 'signatures';
 no warnings 'experimental::signatures';
 use Perl::Tidy;
 
-sub as_lwp( $command ) {
+my %preamble = (
+    Tiny => [
+        'use HTTP::Tiny;'
+    ],
+    LWP  => [
+        'use LWP::UserAgent;'
+    ],
+);
+
+sub as_perl( $ua_type, $command ) {
     $command =~ s!\\[\r\n]+! !g; # eliminate shell-style line breaks
     my @errors;
     local $SIG{__WARN__} = sub { push @errors, @_ };
@@ -20,10 +29,12 @@ sub as_lwp( $command ) {
         };
 
     my $code = join( "\n\n",
+                   @{ $preamble{ $ua_type } },
                    map { s!^    !!gm; $_ }
-                   map { $_->as_snippet }
+                   map { $_->as_snippet( type => $ua_type ) }
                    @requests
                );
+
     my $formatted;
     Perl::Tidy::perltidy(
         source      => \$code,
@@ -40,12 +51,13 @@ sub as_lwp( $command ) {
 }
 
 get  '/' => sub( $c ) {
-    $c->render(as_lwp( 'curl -X GET -A pcurl/1.0 https://example.com --data-binary @/etc/passwd' ))
+    $c->render(as_perl( 'LWP', 'curl -X GET -A pcurl/1.0 https://example.com --data-binary @/etc/passwd' ))
 } => 'index';
 
 post '/' => sub( $c ) {
     my( $command ) = $c->param("command");
-    my %res = as_lwp( $command );
+    my( $ua_type ) = $c->param("ua_type");
+    my %res = as_perl( $ua_type, $command );
     $c->respond_to(
         json => { json => \%res },
         html => sub { $c->render( %res ); },
@@ -167,38 +179,40 @@ document.addEventListener('DOMContentLoaded', function () {
   run();
 });
 
+function update() {
+    $("#contact").attr('href', contactMail({
+        "url":"http-request-fromcurl@corion.net",
+        "subject":"About the HTTP::Request::FromCurl website",
+        "body":"Hello,\nI'm writing to you about the website at "
+                + window.location + ":\n"
+                + "Thank you very much in advance!\n"
+                + "For debugging, the context of the site is:\n\n",
+        "state": ['#command', '#ua_type', '#perl_code'],
+    }));
+    $.ajax({
+        url     : window.location.href,
+        dataType: 'json',
+        type    : "post",
+        data    : {'command' : $('#command').val(), 'ua_type':$('#ua_type').val()},
+        success : function (result) {
+            $('#perl_code').text(result.perl_code);
+            $("#command_comment").text( result.command );
+            $('#error').text(result.error);
+            $('#version').text(result.version);
+        },
+        error: function (error) {
+            console.log("Error");
+            console.log(error);
+        }
+    });
+}
+
 function run() {
     $(".nojs").hide();
     $(".jsonly").show();
-    $("#command").on('input', function(){
-        $("#contact").attr('href', contactMail({
-            "url":"http-request-fromcurl@corion.net",
-            "subject":"About the HTTP::Request::FromCurl website",
-            "body":"Hello,\nI'm writing to you about the website at "
-                    + window.location + ":\n"
-                    + "Thank you very much in advance!\n"
-                    + "For debugging, the context of the site is:\n\n",
-            "state": ['#command', '#perl_code'],
-        }));
-        $.ajax({
-            url     : window.location.href,
-            dataType: 'json',
-            type    : "post",
-            data    : {'command' : $(this).val()},
-            success : function (result) {
-                $('#perl_code').text(result.perl_code);
-                $("#command_comment").text( result.command );
-                $('#error').text(result.error);
-                $('#version').text(result.version);
-            },
-            error: function (error) {
-                console.log("Error");
-                console.log(error);
-            }
-        });
+    $("#command").on('input', update);
+    $("#ua_type").on('change', update);
 
-
-    });
     $("#copy").click(function() { copyToClipboard($('.codeblock')) });
     $("#command").focus();
 }
@@ -279,12 +293,15 @@ function contactMail(options) {
 <div class="jsonly">
 <a href="#">Copy to clipboard</a>
 </div>
+<label for="ua_type">User-Agent module</label>
+<select name="ua_type" id="ua_type">
+<option value="LWP">LWP::UserAgent</option>
+<option value="Tiny">HTTP::Tiny</option>
+</select>
 <code class="codeblock">
 #!perl
 use strict;
 use warnings;
-use WWW::Mechanize;
-use HTTP::Request;
 
 <span id="perl_code">
 <%= $perl_code %>
