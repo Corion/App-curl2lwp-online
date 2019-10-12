@@ -1,0 +1,33 @@
+---
+abstract: 'convert curl commands to LWP::UserAgent Perl code online'
+author:
+  - 'Max Maischein <corion@cpan.org>'
+build_requires:
+  Data::Dumper: '0'
+  ExtUtils::MakeMaker: '0'
+  Test::Deep: '0'
+  Test::More: '0'
+configure_requires:
+  ExtUtils::MakeMaker: '0'
+dynamic_config: 0
+generated_by: 'ExtUtils::MakeMaker version 7.34, CPAN::Meta::Converter version 2.150010'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: App-curl2lwp-online
+no_index:
+  directory:
+    - t
+    - inc
+requires:
+  Filter::signatures: '0'
+  HTTP::Request::FromCurl: '0.13'
+  Mojolicious: '8'
+  Perl::Tidy: '0'
+  perl: '5.008004'
+resources:
+  repository: git://github.com/Corion/App-curl2lwp-online.git
+version: '0.02'
+x_serialization_backend: 'CPAN::Meta::YAML version 0.018'
+x_static_install: 1
