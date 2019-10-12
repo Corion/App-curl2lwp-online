@@ -45,7 +45,7 @@ my %module = (
 
     PREREQ_PM => {
         'Filter::signatures'      => 0,
-        'HTTP::Request::FromCurl' => 0,
+        'HTTP::Request::FromCurl' => 0.13,
         'Mojolicious'             => 8,
         'Perl::Tidy'              => 0,
     },
