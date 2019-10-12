@@ -146,7 +146,7 @@ h6 {
 pre,
 code,
 xmp {
-  font-family: courier;
+  font-family: courier, monospace;
   font-size: 1rem;
   line-height: 1.4;
   white-space: pre-wrap;
@@ -156,6 +156,7 @@ xmp {
   background-color: gainsboro;
   font-weight: bold;
   padding: 1rem;
+  font-family: courier, monospace;
 }
 #error { color: red; }
 .jsonly { display: hidden; }
