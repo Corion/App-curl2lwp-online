@@ -1,6 +1,6 @@
 #!perl
 use Mojolicious::Lite;
-use HTTP::Request::FromCurl;
+use HTTP::Request::FromFetch;
 use Filter::signatures;
 use feature 'signatures';
 no warnings 'experimental::signatures';
@@ -15,16 +15,15 @@ my %preamble = (
     ],
 );
 
-sub as_perl( $ua_type, $command ) {
+sub as_perl( $ua_type, $parser, $command ) {
     $command =~ s!\\[\r\n]+! !g; # eliminate shell-style line breaks
     my @errors;
     local $SIG{__WARN__} = sub { push @errors, @_ };
 
     my @requests =
         eval {
-            HTTP::Request::FromCurl->new(
-                command_curl => $command,
-                read_files => 0,
+            HTTP::Request::FromFetch->new(
+                $command
             );
         };
 
@@ -43,7 +42,7 @@ sub as_perl( $ua_type, $command ) {
     ) or $code = $formatted;
 
     return (
-        version => $HTTP::Request::FromCurl::VERSION,
+        version => $HTTP::Request::FromFetch::VERSION,
         command => $command,
         perl_code => $code,
         error => join( "\n", grep { defined $_ } $@, @errors, )
@@ -51,12 +50,13 @@ sub as_perl( $ua_type, $command ) {
 }
 
 get  '/' => sub( $c ) {
-    $c->render(as_perl( 'LWP', 'curl -X GET -A pcurl/1.0 https://example.com --data-binary @/etc/passwd' ))
+    $c->render(as_perl( 'LWP', 'fetch("https://example.com", { method:"GET" })' ))
 } => 'index';
 
 post '/' => sub( $c ) {
     my( $command ) = $c->param("command");
     my( $ua_type ) = $c->param("ua_type");
+    my( $parser  ) = $c->param("parser");
     my %res = as_perl( $ua_type, $command );
     $c->respond_to(
         json => { json => \%res },
@@ -212,6 +212,7 @@ function run() {
     $(".jsonly").show();
     $("#command").on('input', update);
     $("#ua_type").on('change', update);
+    $("#parser").on('change', update);
 
     $("#copy").click(function() { copyToClipboard($('.codeblock')) });
     $("#command").focus();
@@ -242,7 +243,7 @@ function contactMail(options) {
 <!DOCTYPE html>
 <html>
 <head>
-<title>Curl-to-lwp - Convert Curl command lines to Perl</title>
+<title>fetch-to-lwp - Convert fetch() commands to Perl</title>
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src 'self'; style-src 'self'; script-src 'self'; worker-src 'none'; frame-src 'none'; object-src 'none'; img-src 'self'; ">
 %= javascript './mojo/jquery/jquery.js'
 %= javascript './app.js'
@@ -252,8 +253,8 @@ function contactMail(options) {
   "@context": "https://schema.org",
   "@id": "curl2lwp",
   "@type": "WebApplication",
-  "name": "Convert Curl command to Perl code",
-  "url": "https://corion.net/curl2lwp.psgi",
+  "name": "Convert fetch() commands to Perl code",
+  "url": "https://corion.net/fetch2lwp.psgi",
   "applicationCategory": "Utility",
   "applicationSubCategory": "Programming",
   "about": "This converts Curl commands to Perl code",
@@ -280,12 +281,17 @@ function contactMail(options) {
 </script>
 </head>
 <body>
-<h2>Paste your Curl command here</h2>
-<p><a href="fetch2lwp.psgi">Switch to Javascript <code>fetch()</code> input</a></p>
+<h2>Paste your <code>fetch()</code> command here</h2>
+<p><a href="curl2lwp.psgi">Switch to Curl input</a></p>
 <form method="POST" action="<%= url_for %>" enctype="application/x-www-form-urlencoded">
 <textarea id="command" name="command">
 <%= $command %>
 </textarea>
+<label for="ua_type">User-Agent module</label>
+<select name="ua_type" id="ua_type">
+<option value="LWP">LWP::UserAgent</option>
+<option value="Tiny">HTTP::Tiny</option>
+</select>
 <div class="nojs">
 <button type="submit">Show Perl code</button>
 </div>
@@ -294,11 +300,6 @@ function contactMail(options) {
 <div class="jsonly">
 <a href="#">Copy to clipboard</a>
 </div>
-<label for="ua_type">User-Agent module</label>
-<select name="ua_type" id="ua_type">
-<option value="LWP">LWP::UserAgent</option>
-<option value="Tiny">HTTP::Tiny</option>
-</select>
 <code class="codeblock">
 #!perl
 use strict;

@@ -4,20 +4,24 @@
 
 # NAME
 
-App::curl2lwp::online - convert curl commands to LWP::UserAgent Perl code online
+App::curl2lwp::online - convert curl and JS fetch() commands to Perl code online
 
 # DESCRIPTION
 
 This is the code driving [https://corion.net/curl2lwp.psgi](https://corion.net/curl2lwp.psgi). It is a fancy web
-interface to [HTTP::Request::FromCurl](https://metacpan.org/pod/HTTP::Request::FromCurl) using [Mojolicious](https://metacpan.org/pod/Mojolicious) for the
-web frontend.
+interface to [HTTP::Request::FromCurl](https://metacpan.org/pod/HTTP::Request::FromCurl) and [HTTP::Request::FromFetch](https://metacpan.org/pod/HTTP::Request::FromFetch)
+using [Mojolicious](https://metacpan.org/pod/Mojolicious) for the web frontend.
+
+It allows code generation for
+[LWP::UserAgent](https://metacpan.org/pod/LWP::UserAgent) and [HTTP::Tiny](https://metacpan.org/pod/HTTP::Tiny). While [HTTP::Tiny](https://metacpan.org/pod/HTTP::Tiny) is smaller
+and supports fewer protocols, it comes included with every modern Perl already.
 
 This module is a placeholder to allow installation via `cpan`.
 
 # INSTALLATION
 
-Copy the included `curl2lwp.cgi` command to somewhere where your webserver
-can invoke it.
+Copy the included `curl2lwp.cgi` and `fetch2lwp.cgi` command to somewhere
+where your webserver can invoke it.
 
 Alternatively, launch the program as
 

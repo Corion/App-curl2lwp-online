@@ -1,5 +1,5 @@
 ---
-abstract: 'convert curl commands to LWP::UserAgent Perl code online'
+abstract: 'convert curl and JS fetch() commands to Perl code online'
 author:
   - 'Max Maischein <corion@cpan.org>'
 build_requires:
@@ -22,7 +22,7 @@ no_index:
     - inc
 requires:
   Filter::signatures: '0'
-  HTTP::Request::FromCurl: '0.13'
+  HTTP::Request::FromCurl: '0.14'
   Mojolicious: '8'
   Perl::Tidy: '0'
   perl: '5.008004'
