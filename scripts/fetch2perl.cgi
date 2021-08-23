@@ -282,7 +282,7 @@ function contactMail(options) {
 </head>
 <body>
 <h2>Paste your <code>fetch()</code> command here</h2>
-<p><a href="curl2lwp.psgi">Switch to Curl input</a> <a href="https://curl.se/h2c/">Headers to Curl</a></p></p>
+<p><a href="curl2lwp.psgi">Switch to Curl input</a> - <a href="https://curl.se/h2c/">Headers to Curl</a></p></p>
 <form method="POST" action="<%= url_for %>" enctype="application/x-www-form-urlencoded">
 <textarea id="command" name="command">
 <%= $command %>
