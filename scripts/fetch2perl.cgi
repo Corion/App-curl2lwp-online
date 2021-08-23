@@ -15,7 +15,7 @@ my %preamble = (
     ],
 );
 
-sub as_perl( $ua_type, $parser, $command ) {
+sub as_perl( $ua_type, $command ) {
     $command =~ s!\\[\r\n]+! !g; # eliminate shell-style line breaks
     my @errors;
     local $SIG{__WARN__} = sub { push @errors, @_ };
@@ -50,7 +50,7 @@ sub as_perl( $ua_type, $parser, $command ) {
 }
 
 get  '/' => sub( $c ) {
-    $c->render(as_perl( 'LWP', 'fetch("https://example.com", { method:"GET" })' ))
+    $c->render(as_perl( 'LWP', 'fetch("https://example.com", { "method":"GET" })' ))
 } => 'index';
 
 post '/' => sub( $c ) {
@@ -311,7 +311,7 @@ use warnings;
 
 <%= "__END__" %>
 
-Created from curl command line
+Created from fetch() command
 <span id="command_comment">
 <%= $command %>
 </span>
@@ -322,7 +322,7 @@ Created from curl command line
 <h2>Powered by</h2>
 <ul>
 <li><a href="https://mojolicious.org">Mojolicious</a> for highly convenient web stuff</li>
-<li><a href="https://metacpan.org/pod/HTTP::Request::FromCurl">HTTP::Request::FromCurl</a> <span id="version"><%= $version %></span> for Curl handling (<a href="https://github.com/Corion/HTTP-Request-FromCurl">Github repository</a>)</li>
+<li><a href="https://metacpan.org/pod/HTTP::Request::FromFetch">HTTP::Request::FromFetch</a> <span id="version"><%= $version %></span> for fetch() handling (<a href="https://github.com/Corion/HTTP-Request-FromCurl">Github repository</a>)</li>
 % use Mojo::Util 'url_escape';
 <li><a id="contact" href="mailto:http-request-fromcurl@corion.net?subject=<%= url_escape('About HTTP::Request::FromCurl'); %>&body=<%= url_escape( $command ); %>">Bug report / contact</a></li>
 </ul>
