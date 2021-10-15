@@ -23,7 +23,8 @@ sub as_perl( $ua_type, $command ) {
     my @requests =
         eval {
             HTTP::Request::FromFetch->new(
-                $command
+                command_fetch => $command,
+                read_files => 0,
             );
         };
 

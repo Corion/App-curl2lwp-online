@@ -23,7 +23,8 @@ sub as_perl( $ua_type, $command ) {
     my @requests =
         eval {
             HTTP::Request::FromWGet->new(
-                $command
+                command_wget => $command,
+                read_files => 0,
             );
         };
 
