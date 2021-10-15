@@ -283,8 +283,9 @@ function contactMail(options) {
 </head>
 <body>
 <h2>Paste your <code>wget</code> command here</h2>
-<p><a href="curl2lwp.psgi">Switch to Curl input</a> - <a href="https://curl.se/h2c/">Headers to Curl</a></p></p>
-<p><a href="fetch2lwp.psgi">Switch to fetch() input</a></p>
+<p><a href="fetch2lwp.psgi">Switch to Javascript <code>fetch()</code> input</a> -
+   <a href="curl2lwp.psgi">Switch to Curl input</a></p>
+<p><a href="https://curl.se/h2c/">Headers to Curl</a></p>
 <form method="POST" action="<%= url_for %>" enctype="application/x-www-form-urlencoded">
 <textarea id="command" name="command">
 <%= $command %>
