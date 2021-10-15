@@ -25,7 +25,7 @@ sub as_perl( $ua_type, $command ) {
             HTTP::Request::FromFetch->new(
                 command_fetch => $command,
                 read_files => 0,
-            );
+            );git
         };
 
     my $code = join( "\n\n",
@@ -51,7 +51,7 @@ sub as_perl( $ua_type, $command ) {
 }
 
 get  '/' => sub( $c ) {
-    $c->render(as_perl( 'LWP', 'fetch("https://example.com", { "method":"GET" })' ))
+    $c->render(as_perl( 'Tiny', 'fetch("https://example.com", { "method":"GET" })' ))
 } => 'index';
 
 post '/' => sub( $c ) {
@@ -290,8 +290,8 @@ function contactMail(options) {
 </textarea>
 <label for="ua_type">User-Agent module</label>
 <select name="ua_type" id="ua_type">
+<option value="Tiny" selected="selected">HTTP::Tiny</option>
 <option value="LWP">LWP::UserAgent</option>
-<option value="Tiny">HTTP::Tiny</option>
 </select>
 <div class="nojs">
 <button type="submit">Show Perl code</button>

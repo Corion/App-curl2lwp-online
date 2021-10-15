@@ -51,7 +51,7 @@ sub as_perl( $ua_type, $command ) {
 }
 
 get  '/' => sub( $c ) {
-    $c->render(as_perl( 'LWP', 'curl -X GET -A pcurl/1.0 https://example.com --data-binary @/etc/passwd' ))
+    $c->render(as_perl( 'Tiny', 'curl -X GET -A pcurl/1.0 https://example.com --data-binary @/etc/passwd' ))
 } => 'index';
 
 post '/' => sub( $c ) {
@@ -296,8 +296,8 @@ function contactMail(options) {
 </div>
 <label for="ua_type">User-Agent module</label>
 <select name="ua_type" id="ua_type">
+<option value="Tiny" selected="selected">HTTP::Tiny</option>
 <option value="LWP">LWP::UserAgent</option>
-<option value="Tiny">HTTP::Tiny</option>
 </select>
 <code class="codeblock">
 #!perl
