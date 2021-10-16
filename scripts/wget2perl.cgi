@@ -1,6 +1,6 @@
 #!perl
 use Mojolicious::Lite;
-use HTTP::Request::FromWGet;
+use HTTP::Request::FromWget;
 use Filter::signatures;
 use feature 'signatures';
 no warnings 'experimental::signatures';
@@ -22,7 +22,7 @@ sub as_perl( $ua_type, $command ) {
 
     my @requests =
         eval {
-            HTTP::Request::FromWGet->new(
+            HTTP::Request::FromWget->new(
                 command_wget => $command,
                 read_files => 0,
             );
@@ -43,7 +43,7 @@ sub as_perl( $ua_type, $command ) {
     ) or $code = $formatted;
 
     return (
-        version => $HTTP::Request::FromWGet::VERSION,
+        version => $HTTP::Request::FromWget::VERSION,
         command => $command,
         perl_code => $code,
         error => join( "\n", grep { defined $_ } $@, @errors, )
@@ -325,7 +325,7 @@ Created from wget command
 <h2>Powered by</h2>
 <ul>
 <li><a href="https://mojolicious.org">Mojolicious</a> for highly convenient web stuff</li>
-<li><a href="https://metacpan.org/pod/HTTP::Request::FromWGet">HTTP::Request::FromWGet</a> <span id="version"><%= $version %></span> for wget handling (<a href="https://github.com/Corion/HTTP-Request-FromCurl">Github repository</a>)</li>
+<li><a href="https://metacpan.org/pod/HTTP::Request::FromWget">HTTP::Request::FromWGet</a> <span id="version"><%= $version %></span> for wget handling (<a href="https://github.com/Corion/HTTP-Request-FromCurl">Github repository</a>)</li>
 % use Mojo::Util 'url_escape';
 <li><a id="contact" href="mailto:http-request-fromcurl@corion.net?subject=<%= url_escape('About HTTP::Request::FromCurl'); %>&body=<%= url_escape( $command ); %>">Bug report / contact</a></li>
 </ul>
