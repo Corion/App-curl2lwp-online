@@ -52,6 +52,8 @@ sub as_perl( $ua_type, $command ) {
 
 get  '/' => sub( $c ) {
     $c->render(as_perl( 'Tiny', 'curl -X GET -A pcurl/1.0 https://example.com --data-binary @/etc/passwd' ))
+
+
 } => 'index';
 
 post '/' => sub( $c ) {
@@ -320,6 +322,16 @@ Created from curl command line
 <div id="error">
 <%= $error %>
 </div>
+<h2>Instructions</h2>
+<img src="./curl2lwp.psgi/demo-instructions.png" alt="Screenshot of where to click">
+<p>These instructions work for Firefox, Google Chrome and maybe also Safari.</p>
+<ol>
+<li>Open the Network tab in the DevTools (by pressing F12 for example)</li>
+<li>Right-click a request</li>
+<li>Click "Copy" &gt; "Copy as cURL"</li>
+<li>Paste it in the text box above</li>
+<li>Look at the generated code</li>
+</ol>
 <h2>Powered by</h2>
 <ul>
 <li><a href="https://mojolicious.org">Mojolicious</a> for highly convenient web stuff</li>
