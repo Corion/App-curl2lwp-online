@@ -296,7 +296,7 @@ function contactMail(options) {
 </form>
 <h2>Resulting Perl code</h2>
 <div class="jsonly">
-<a href="#">Copy to clipboard</a>
+<a href="#" id="copy">Copy to clipboard</a>
 </div>
 <label for="ua_type">User-Agent module</label>
 <select name="ua_type" id="ua_type">
