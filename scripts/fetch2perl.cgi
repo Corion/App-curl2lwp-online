@@ -228,7 +228,7 @@ function copyToClipboard(element) {
 
 function contactMail(options) {
     let mailBody = options["body"];
-    for (var v in options["state"]) {
+    for (const v of options["state"]) {
         let content = v + ":\n[[" + $(v).text() + "]]";
         mailBody = mailBody + "\n" + content;
     };
